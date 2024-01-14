@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Tickets to Mars</title>
+    <style>
+        body {
+            background-image: url('images/nasa_background.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 50px;
+            margin-top: 50px;
+        }
+
+        .ticket-image {
+            display: block;
+            margin: 0 auto;
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-3">
+        <h1 class="text-center mb-4">Tickets to Mars</h1>
+
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="images/mars_ticket.png" alt="Ticket Image" class="ticket-image mb-3">
+
+                        <form id="ticketForm" novalidate>
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="Enter your full name" required>
+                                <small id="nameHelp" class="form-text text-muted"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter your email address" required>
+                                <small id="emailHelp" class="form-text text-muted"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ticketClass">Ticket Class</label>
+                                <select class="form-control" id="ticketClass" required>
+                                    <option value="firstClass">First Class - $2000</option>
+                                    <option value="secondClass">Second Class - $1000</option>
+                                </select>
+                                <small id="ticketClassHelp" class="form-text text-muted"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="quantity">Number of Tickets</label>
+                                <input type="number" class="form-control" id="quantity" min="1" max="5" placeholder="Enter the number of tickets" required>
+                                <small id="quantityHelp" class="form-text text-muted"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bookingDate">Booking Date</label>
+                                <input type="date" class="form-control" id="bookingDate" required min="<?= date('Y-m-d') ?>">
+                                <small id="bookingDateHelp" class="form-text text-muted"></small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="creditCard">Credit Card Number (12 digits only)</label>
+                                <input type="text" class="form-control" id="creditCard" placeholder="Enter your credit card number" maxlength="12" required>
+                                <small id="creditCardHelp" class="form-text text-muted"></small>
+                            </div>
+
+                            <button type="button" class="btn btn-primary btn-block" onclick="purchaseTickets()">Purchase Tickets</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function validateName() {
+            var name = document.getElementById('name').value;
+            var nameHelp = document.getElementById('nameHelp');
+
+            if (name.trim() !== '') {
+                nameHelp.textContent = '';
+                return true;
+            } else {
+                nameHelp.textContent = 'Please enter your full name.';
+                return false;
+            }
+        }
+
+        function validateEmail() {
+            var email = document.getElementById('email').value;
+            var emailHelp = document.getElementById('emailHelp');
+
+            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                emailHelp.textContent = '';
+                return true;
+            } else {
+                emailHelp.textContent = 'Please enter a valid email address.';
+                return false;
+            }
+        }
+
+        function validateTicketClass() {
+            var ticketClass = document.getElementById('ticketClass').value;
+            var ticketClassHelp = document.getElementById('ticketClassHelp');
+
+            if (ticketClass === 'firstClass' || ticketClass === 'secondClass') {
+                ticketClassHelp.textContent = '';
+                return true;
+            } else {
+                ticketClassHelp.textContent = 'Please select a ticket class.';
+                return false;
+            }
+        }
+
+        function validateQuantity() {
+            var quantity = parseInt(document.getElementById('quantity').value);
+            var quantityHelp = document.getElementById('quantityHelp');
+
+            if (!isNaN(quantity) && quantity >= 1 && quantity <= 5) {
+                quantityHelp.textContent = '';
+                return true;
+            } else {
+                quantityHelp.textContent = 'Please enter a valid quantity (1 to 5).';
+                return false;
+            }
+        }
+
+        function validateBookingDate() {
+            var bookingDate = document.getElementById('bookingDate').value;
+            var bookingDateHelp = document.getElementById('bookingDateHelp');
+
+            // Assuming date format YYYY-MM-DD
+            var currentDate = new Date();
+            var selectedDate = new Date(bookingDate + 'T00:00:00Z');
+
+            if (selectedDate >= currentDate) {
+                bookingDateHelp.textContent = '';
+                return true;
+            } else {
+                bookingDateHelp.textContent = 'Please select a valid booking date.';
+                return false;
+            }
+        }
+
+        function validateCreditCard() {
+            var creditCard = document.getElementById('creditCard').value;
+            var creditCardHelp = document.getElementById('creditCardHelp');
+
+            if (/^\d{12}$/.test(creditCard)) {
+                creditCardHelp.textContent = '';
+                return true;
+            } else {
+                creditCardHelp.textContent = 'Please enter a 12-digit credit card number.';
+                return false;
+            }
+        }
+
+        function purchaseTickets() {
+            if (
+                validateName() &&
+                validateEmail() &&
+                validateTicketClass() &&
+                validateQuantity() &&
+                validateBookingDate() &&
+                validateCreditCard()
+            ) {
+                var name = document.getElementById('name').value;
+                var email = document.getElementById('email').value;
+                var ticketClass = document.getElementById('ticketClass').value;
+                var quantity = parseInt(document.getElementById('quantity').value);
+                var bookingDate = document.getElementById('bookingDate').value;
+                var creditCard = document.getElementById('creditCard').value;
+
+                var classDescription = ticketClass === 'firstClass' ? 'First Class' : 'Second Class';
+
+                // Prepare the data for the POST request
+                var data = {
+                    name: name,
+                    email: email,
+                    ticketClass: ticketClass,
+                    quantity: quantity,
+                    bookingDate: bookingDate,
+                    creditCard: creditCard
+                };
+
+                // Replace 'your_backend_url' with the actual URL of your Go backend server
+                var backendUrl = 'order';
+
+                // Make the POST request using the Fetch API
+                fetch(backendUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+                    .then(response => response.text()) // Change to response.text() for HTML response
+                    .then(html => {
+                        // Replace the entire document body with the HTML received from the server
+                        document.body.innerHTML = html;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+            }
+        }
+    </script>
+
+</body>
+
+</html>

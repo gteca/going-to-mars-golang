@@ -1,0 +1,55 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <title>Tickets to Mars</title>
+  <style>
+    body {
+      background-image: url('images/planet_mars.jpg'); /* Replace with your background image URL */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white; /* Set text color to white for better visibility */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column; /* Display content in a column */
+      height: 100vh; /* Set full height of the viewport */
+      margin: 0; /* Remove default margin */
+      text-align: center;
+    }
+
+    .ticket-container {
+      max-width: 100%; /* Set the maximum width of the ticket container (adjust as needed) */
+    }
+
+    .ticket-image {
+      width: 150%; /* Set the image size to fill the available width */
+      max-width: 1000px; /* Set a maximum width for responsiveness */
+      height: auto;
+    }
+
+    .purchase-text {
+      font-size: 36px; /* Set the font size for the purchase text */
+      margin-bottom: 20px; /* Add some margin for spacing */
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="purchase-text">Ticket Purchased</h1>
+
+<div class="ticket-container">
+  <img src="images/mars_ticket.png" alt="Ticket Image" class="ticket-image">
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+

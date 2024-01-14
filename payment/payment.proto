@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "github.com/gteca/going-to-mars/payment";
+
+message PaymentReq {
+    float amount     = 1;
+    string cardNumber = 2;
+}
+
+message PaymentResp {
+    bool   success       = 1;
+    string transactionId = 2;
+}
+
+service Operations {
+    rpc ExecutePayment(PaymentReq) returns (PaymentResp) {}
+}
