@@ -63,7 +63,7 @@ User was charged and the current balance reflect the amount deduct from the acco
 Picked second user account
 ![Alt Text](./pictures/second_user_account.png)
 Second user attemp to buy tickets which price exceed his current balance 
-![Alt Text](./pictures/second_user_buying.png)
+![Alt Text](./pictures/second_purchase.png)
 Payment declined (The reason is logged in the GRPC client stdout)
 ![Alt Text](./pictures/payment_declined.png)
 
